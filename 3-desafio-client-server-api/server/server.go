@@ -42,9 +42,14 @@ func GetUsdBrlHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	err = json.NewEncoder(w).Encode(cp)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(cp)
 }
 
 func GetUsdBrlPrice() (*CoinPrice, error) {
