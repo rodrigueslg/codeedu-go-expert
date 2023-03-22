@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"fmt"
 
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -20,11 +21,13 @@ type CoinLog struct {
 func NewSQLiteRepository() *CoinRepository {
 	db, err := gorm.Open(sqlite.Open("./server/coinlog.db"), &gorm.Config{})
 	if err != nil {
-		panic(err)
+		fmt.Printf("can't connect to sqlite: %s\n", err)
+		return nil
 	}
 	err = db.AutoMigrate(&CoinLog{})
 	if err != nil {
-		panic(err)
+		fmt.Printf("can't run migration: %s\n", err)
+		return nil
 	}
 	return &CoinRepository{
 		DB: db,
