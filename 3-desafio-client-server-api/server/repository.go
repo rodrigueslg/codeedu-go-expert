@@ -21,12 +21,12 @@ type CoinLog struct {
 func NewSQLiteRepository() *CoinRepository {
 	db, err := gorm.Open(sqlite.Open("./server/coinlog.db"), &gorm.Config{})
 	if err != nil {
-		fmt.Printf("can't connect to sqlite: %s\n", err)
+		fmt.Printf("server: can't connect to sqlite: %s\n", err)
 		return nil
 	}
 	err = db.AutoMigrate(&CoinLog{})
 	if err != nil {
-		fmt.Printf("can't run migration: %s\n", err)
+		fmt.Printf("server: can't run migration: %s\n", err)
 		return nil
 	}
 	return &CoinRepository{

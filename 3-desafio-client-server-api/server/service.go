@@ -3,8 +3,10 @@ package server
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -51,17 +53,20 @@ func (s *CoinService) GetUsdBrlPrice() (*CoinPrice, error) {
 	req = req.WithContext(ctxAPI)
 	res, err := http.DefaultClient.Do(req)
 	if err != nil {
+		fmt.Fprintf(os.Stderr, "server: request failed: %s", err)
 		return nil, err
 	}
 
 	body, err := io.ReadAll(res.Body)
 	if err != nil {
+		fmt.Fprintf(os.Stderr, "server: can't read api respose: %s", err)
 		return nil, err
 	}
 
 	var cp CoinPrice
 	err = json.Unmarshal(body, &cp)
 	if err != nil {
+		fmt.Fprintf(os.Stderr, "server: can't parse api respose: %s", err)
 		return nil, err
 	}
 

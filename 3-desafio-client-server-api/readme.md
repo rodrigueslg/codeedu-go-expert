@@ -25,4 +25,4 @@ O endpoint necessário gerado pelo server.go para este desafio será: /cotacao e
  
 Ao finalizar, envie o link do repositório para correção.
 # Rodando a solução
-`go run .`
+Execute o comando `go run .` no terminal quantas vezes for necessário.
