@@ -8,18 +8,18 @@ import (
 	"github.com/go-chi/jwtauth"
 	"github.com/rodrigueslg/codedu-goexpert/rest-api/internal/dto"
 	"github.com/rodrigueslg/codedu-goexpert/rest-api/internal/entity"
-	"github.com/rodrigueslg/codedu-goexpert/rest-api/internal/infra/database"
+	"github.com/rodrigueslg/codedu-goexpert/rest-api/internal/repository"
 )
 
 type UserHandler struct {
-	UserDB       database.UserInterface
+	UserRepo     repository.UserRepositoryInterface
 	Jwt          *jwtauth.JWTAuth
 	JwtExpiresIn int
 }
 
-func NewUserHandler(db database.UserInterface, jwt *jwtauth.JWTAuth, jwtExpiresIn int) *UserHandler {
+func NewUserHandler(repo repository.UserRepositoryInterface, jwt *jwtauth.JWTAuth, jwtExpiresIn int) *UserHandler {
 	return &UserHandler{
-		UserDB:       db,
+		UserRepo:     repo,
 		Jwt:          jwt,
 		JwtExpiresIn: jwtExpiresIn,
 	}
@@ -51,7 +51,7 @@ func (h *UserHandler) CreateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.UserDB.Create(u)
+	err = h.UserRepo.Create(u)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		error := dto.Error{Message: err.Error()}
@@ -80,7 +80,7 @@ func (h *UserHandler) Auth(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	u, err := h.UserDB.FindByEmail(user.Email)
+	u, err := h.UserRepo.FindByEmail(user.Email)
 	if err != nil {
 		w.WriteHeader(http.StatusUnauthorized)
 		return

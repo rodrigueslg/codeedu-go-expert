@@ -8,8 +8,8 @@ import (
 	"github.com/go-chi/jwtauth"
 	"github.com/rodrigueslg/codedu-goexpert/rest-api/configs"
 	"github.com/rodrigueslg/codedu-goexpert/rest-api/internal/entity"
-	"github.com/rodrigueslg/codedu-goexpert/rest-api/internal/infra/database"
-	"github.com/rodrigueslg/codedu-goexpert/rest-api/internal/infra/webserver/handlers"
+	"github.com/rodrigueslg/codedu-goexpert/rest-api/internal/handlers"
+	"github.com/rodrigueslg/codedu-goexpert/rest-api/internal/repository"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 
@@ -51,11 +51,11 @@ func main() {
 		panic(err)
 	}
 
-	productDB := database.NewProduct(db)
-	userDB := database.NewUser(db)
+	productRepo := repository.NewProductRepository(db)
+	userRepo := repository.NewUserRepository(db)
 
-	productHandler := handlers.NewProductHandler(productDB)
-	userHandler := handlers.NewUserHandler(userDB, configs.TokenAuth, configs.JWTExpiresIn)
+	productHandler := handlers.NewProductHandler(productRepo)
+	userHandler := handlers.NewUserHandler(userRepo, configs.TokenAuth, configs.JWTExpiresIn)
 
 	r := chi.NewRouter()
 	//r.Use(middleware.Logger)

@@ -1,4 +1,4 @@
-package database
+package repository
 
 import (
 	"testing"
@@ -22,9 +22,9 @@ func TestCreateUser(t *testing.T) {
 	db := CreateUserDBConnection(t)
 
 	user, err := entity.NewUser("John", "j@j.com", "123456")
-	userDB := NewUser(db)
+	userRepo := NewUserRepository(db)
 
-	err = userDB.Create(user)
+	err = userRepo.Create(user)
 	assert.Nil(t, err)
 
 	var userFound entity.User
@@ -40,12 +40,12 @@ func TestFindByEmail(t *testing.T) {
 	db := CreateUserDBConnection(t)
 
 	user, err := entity.NewUser("John", "j@j.com", "123456")
-	userDB := NewUser(db)
+	userRepo := NewUserRepository(db)
 
-	err = userDB.Create(user)
+	err = userRepo.Create(user)
 	assert.Nil(t, err)
 
-	userFound, err := userDB.FindByEmail(user.Email)
+	userFound, err := userRepo.FindByEmail(user.Email)
 	assert.Nil(t, err)
 	assert.Equal(t, user.ID, userFound.ID)
 	assert.Equal(t, user.Name, userFound.Name)

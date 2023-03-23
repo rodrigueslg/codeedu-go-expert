@@ -8,17 +8,19 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/rodrigueslg/codedu-goexpert/rest-api/internal/dto"
 	"github.com/rodrigueslg/codedu-goexpert/rest-api/internal/entity"
-	"github.com/rodrigueslg/codedu-goexpert/rest-api/internal/infra/database"
+	"github.com/rodrigueslg/codedu-goexpert/rest-api/internal/repository"
 
 	entitypkg "github.com/rodrigueslg/codedu-goexpert/rest-api/pkg/entity"
 )
 
 type ProductHandler struct {
-	ProductDB database.ProductInterface
+	ProductRepo repository.ProductRepositoryInterface
 }
 
-func NewProductHandler(db database.ProductInterface) *ProductHandler {
-	return &ProductHandler{ProductDB: db}
+func NewProductHandler(repo repository.ProductRepositoryInterface) *ProductHandler {
+	return &ProductHandler{
+		ProductRepo: repo,
+	}
 }
 
 // CreateProduct godoc
@@ -51,7 +53,7 @@ func (h *ProductHandler) CreateProduct(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.ProductDB.Create(p)
+	err = h.ProductRepo.Create(p)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
@@ -82,7 +84,7 @@ func (h *ProductHandler) GetProduct(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	p, err := h.ProductDB.FindByID(id)
+	p, err := h.ProductRepo.FindByID(id)
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 		return
@@ -132,13 +134,13 @@ func (h *ProductHandler) UpdateProduct(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	_, err = h.ProductDB.FindByID(id)
+	_, err = h.ProductRepo.FindByID(id)
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 		return
 	}
 
-	err = h.ProductDB.Update(&product)
+	err = h.ProductRepo.Update(&product)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
@@ -169,13 +171,13 @@ func (h *ProductHandler) DeleteProduct(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	_, err := h.ProductDB.FindByID(id)
+	_, err := h.ProductRepo.FindByID(id)
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 		return
 	}
 
-	err = h.ProductDB.Delete(id)
+	err = h.ProductRepo.Delete(id)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
@@ -212,7 +214,7 @@ func (h *ProductHandler) GetProducts(w http.ResponseWriter, r *http.Request) {
 		limit = 0
 	}
 
-	products, err := h.ProductDB.FindAll(page, limit, sortParam)
+	products, err := h.ProductRepo.FindAll(page, limit, sortParam)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
