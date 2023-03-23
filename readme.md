@@ -1,15 +1,7 @@
-# Go Expert - CodeEdu FullCycle Training/Course
+# Golang projects
 
-## This repository contains samples, exercises and projects from the Go Expert training/course  
-* Training/Course Website: https://goexpert.fullcycle.com.br/curso/
-* Institution: https://fullcycle.com.br/
-* Instructor: https://www.linkedin.com/in/wesleywillians/
-* YouTube Channel: https://www.youtube.com/@FullCycle
-
-## Summary
-
-[Find Brazil's zipcode]()  
-[Database access]()  
-[Challange: Simple Client-Server API]()  
-[Tests]()
-[Full Rest API]()
+[Find Brazil's zipcode](https://github.com/rodrigueslg/codeedu-go-expert/tree/main/1-find-br-zipcode)  
+[Database access](https://github.com/rodrigueslg/codeedu-go-expert/tree/main/2-database)  
+[Challange: Simple Client-Server API](https://github.com/rodrigueslg/codeedu-go-expert/tree/main/3-challenge-client-server-api)  
+[Tests](https://github.com/rodrigueslg/codeedu-go-expert/tree/main/4-tests)  
+[Full Rest API](https://github.com/rodrigueslg/codeedu-go-expert/tree/main/5-full-rest-api)
