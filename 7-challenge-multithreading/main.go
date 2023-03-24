@@ -38,6 +38,11 @@ func main() {
 	ch1 := make(chan ApiCEP)
 	ch2 := make(chan ViaCEP)
 
+	if len(os.Args) != 2 {
+		println("CEP is required.\nTry again: 'go run main.go xxxxx-xxx' ")
+		return
+	}
+
 	cep := os.Args[1]
 	if cep == "" {
 		println("CEP is required.\nTry again: 'go run main.go xxxxx-xxx' ")
