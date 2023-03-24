@@ -41,9 +41,11 @@ func main() {
 	cep := os.Args[1]
 	if cep == "" {
 		println("CEP is required.\nTry again: 'go run main.go xxxxx-xxx' ")
+		return
 	}
 	if !strings.Contains(cep, "-") {
 		println("Invalid CEP format.\nTry again: 'go run main.go xxxxx-xxx'")
+		return
 	}
 
 	go func() {
@@ -55,9 +57,11 @@ func main() {
 		body, _ := ioutil.ReadAll(res.Body)
 		if res.StatusCode != 200 {
 			println("viacep response: ", string(body))
+			return
 		}
 		if res.StatusCode == 429 {
 			println("viacep response: ", "blocked by apicep (too many requests)")
+			return
 		}
 
 		var apiCep ApiCEP
@@ -75,9 +79,11 @@ func main() {
 		body, _ := ioutil.ReadAll(res.Body)
 		if res.StatusCode != 200 {
 			println("viacep response: ", string(body))
+			return
 		}
 		if res.StatusCode == 429 {
 			println("viacep response: ", "blocked by viacep (too many requests)")
+			return
 		}
 
 		var viaCep ViaCEP
