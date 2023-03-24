@@ -43,7 +43,7 @@ func main() {
 		println("CEP is required.\nTry again: 'go run main.go xxxxx-xxx' ")
 		return
 	}
-	if !strings.Contains(cep, "-") {
+	if len(cep) != 9 {
 		println("Invalid CEP format.\nTry again: 'go run main.go xxxxx-xxx'")
 		return
 	}
