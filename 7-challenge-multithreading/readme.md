@@ -15,3 +15,10 @@ Os requisitos para este desafio são:
 - O resultado da request deverá ser exibido no command line, bem como qual API a enviou.
 
 - Limitar o tempo de resposta em 1 segundo. Caso contrário, o erro de timeout deve ser exibido.
+
+# Executar a solução
+
+* Execute o comando a seguir e substitua 'xxxxx-xx' pelo CEP  
+`go run main.go xxxxx-xxx`
+
+* ATENÇÃO: Caso o comando seja executado seguidas vezes seguidas as APIs retornarão erro [429 - too many requests]
